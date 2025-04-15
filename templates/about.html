@@ -1,0 +1,101 @@
+{% raw %}<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>About - AI Engine Control Panel</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#ecfeff',
+                            100: '#cffafe',
+                            200: '#a5f3fc',
+                            300: '#67e8f9',
+                            400: '#22d3ee',
+                            500: '#06b6d4',
+                            600: '#0891b2',
+                            700: '#0e7490',
+                            800: '#155e75',
+                            900: '#164e63',
+                        }
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <!-- External Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='sryle.css') }}" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+</head>
+<body class="bg-gray-50 font-inter min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex items-center space-x-3">
+                        <i class="fas fa-robot text-2xl text-primary-500"></i>
+                        <span class="text-xl font-bold text-gray-900">AI Engine</span>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-8">
+                    <a href="{{ url_for('index') }}" class="text-gray-900 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 flex items-center space-x-1">
+                        <i class="fas fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                    <a href="{{ url_for('about') }}" class="text-primary-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 flex items-center space-x-1">
+                        <i class="fas fa-info-circle"></i>
+                        <span>About</span>
+                    </a>
+                    <a href="{{ url_for('contact') }}" class="text-gray-900 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 flex items-center space-x-1">
+                        <i class="fas fa-envelope"></i>
+                        <span>Contact Us</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="bg-white rounded-2xl shadow-lg p-8">
+            <h1 class="text-4xl font-bold text-gray-900 mb-6">About AI Engine</h1>
+            <div class="prose max-w-none">
+                <p class="text-lg text-gray-600 mb-6">
+                    AI Engine is a cutting-edge search platform that leverages advanced artificial intelligence to provide accurate and insightful results. Our system combines multiple AI models to deliver the most relevant information for your queries.
+                </p>
+                <h2 class="text-2xl font-semibold text-gray-900 mb-4">Our Technology</h2>
+                <p class="text-lg text-gray-600 mb-6">
+                    We utilize state-of-the-art language models including GPT-40, Gemini-Pro, Claude, and others to process and understand your queries in natural language. Our platform continuously learns and improves to provide better results.
+                </p>
+                <h2 class="text-2xl font-semibold text-gray-900 mb-4">Features</h2>
+                <ul class="list-disc list-inside text-lg text-gray-600 mb-6">
+                    <li>Advanced natural language processing</li>
+                    <li>Multiple AI model support</li>
+                    <li>Real-time search results</li>
+                    <li>Voice search capability</li>
+                    <li>Confidence scoring</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white mt-12 py-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-gray-500">© 2024 AI Engine Control Panel. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>{% endraw %}
