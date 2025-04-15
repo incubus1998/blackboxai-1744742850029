@@ -1,0 +1,14 @@
+/* Custom styles for login page */
+
+body {
+  background-color: #f9fafb;
+}
+
+.login-container {
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+}
