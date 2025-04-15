@@ -1,0 +1,15 @@
+/* Custom styles for AI Assignment Helper */
+
+#assignment-result {
+  transition: opacity 0.3s ease-in-out;
+}
+
+#assignment-result.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+#assignment-result:not(.hidden) {
+  opacity: 1;
+  pointer-events: auto;
+}
