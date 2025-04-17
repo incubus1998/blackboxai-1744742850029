@@ -1,14 +1,49 @@
 /* Custom styles for login page */
-
-body {
-  background-color: #f9fafb;
+.bg-primary-600 {
+    background-color: #0891b2;
 }
 
-.login-container {
-  max-width: 400px;
-  margin: 2rem auto;
-  padding: 2rem;
-  background-color: white;
-  border-radius: 1rem;
-  box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+.hover\:bg-primary-700:hover {
+    background-color: #0e7490;
+}
+
+.focus\:ring-primary-500:focus {
+    --tw-ring-color: #06b6d4;
+}
+
+input:focus {
+    outline: none;
+    border-color: #06b6d4;
+    box-shadow: 0 0 0 2px rgba(6, 182, 212, 0.2);
+}
+
+button:hover, 
+a.hover\:bg-gray-50:hover {
+    transform: translateY(-1px);
+    transition: transform 0.2s;
+}
+
+/* Google Sign-in button styles */
+.google-btn {
+    transition: all 0.2s ease-in-out;
+}
+
+.google-btn:hover {
+    background-color: #f3f4f6;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Divider line styles */
+.divider-text {
+    background-color: white;
+    padding: 0 1rem;
+    color: #6b7280;
+    font-size: 0.875rem;
+}
+
+.divider-line {
+    height: 1px;
+    background-color: #e5e7eb;
+    width: 100%;
+    margin: 1.5rem 0;
 }
