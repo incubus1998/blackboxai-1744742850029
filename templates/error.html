@@ -32,7 +32,7 @@
         }
     </script>
     <!-- External Custom CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='sryle.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <!-- Font Awesome -->
@@ -62,10 +62,45 @@
                         <i class="fas fa-envelope"></i>
                         <span>Contact Us</span>
                     </a>
+                    {% if session.get('logged_in') %}
+                    <a href="{{ url_for('logout') }}" class="ml-auto px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 text-sm font-medium">
+                        Logout
+                    </a>
+                    {% else %}
+                    <a href="{{ url_for('login') }}" class="ml-auto px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 text-sm font-medium">
+                        Login
+                    </a>
+                    {% endif %}
                 </div>
             </div>
         </div>
     </nav>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
+                {% for category, message in messages %}
+                    <div class="rounded-md p-4 mb-4 {% if category == 'error' %}bg-red-50 text-red-700{% elif category == 'success' %}bg-green-50 text-green-700{% else %}bg-blue-50 text-blue-700{% endif %}">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                {% if category == 'error' %}
+                                    <i class="fas fa-exclamation-circle"></i>
+                                {% elif category == 'success' %}
+                                    <i class="fas fa-check-circle"></i>
+                                {% else %}
+                                    <i class="fas fa-info-circle"></i>
+                                {% endif %}
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-sm font-medium">{{ message }}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
 
     <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -75,7 +110,7 @@
             </div>
             <h1 class="text-4xl font-bold text-gray-900 mb-4">Oops! Something went wrong</h1>
             <p class="text-lg text-gray-600 mb-8">{{ error }}</p>
-            <a href="{{ url_for('index') }}" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700">
+            <a href="{{ url_for('index') }}" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-all duration-200 transform hover:-translate-y-0.5">
                 <i class="fas fa-home mr-2"></i>
                 Return Home
             </a>
