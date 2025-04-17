@@ -5,6 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>AI Assignment Helper - AI Engine</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#ecfeff',
+                            100: '#cffafe',
+                            200: '#a5f3fc',
+                            300: '#67e8f9',
+                            400: '#22d3ee',
+                            500: '#06b6d4',
+                            600: '#0891b2',
+                            700: '#0e7490',
+                            800: '#155e75',
+                            900: '#164e63',
+                        }
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
     <link rel="stylesheet" href="{{ url_for('static', filename='aihelper.style.css') }}" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -33,15 +58,51 @@
                     <a href="{{ url_for('ai_assignment_helper') }}" class="text-primary-600 px-3 py-2 rounded-md text-sm font-medium flex items-center space-x-1">
                         <i class="fas fa-lightbulb"></i><span>AI Assignment Helper</span>
                     </a>
+                    {% if session.get('logged_in') %}
+                    <a href="{{ url_for('logout') }}" class="ml-auto px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 text-sm font-medium">
+                        Logout
+                    </a>
+                    {% else %}
+                    <a href="{{ url_for('login') }}" class="ml-auto px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 text-sm font-medium">
+                        Login
+                    </a>
+                    {% endif %}
                 </div>
             </div>
         </div>
     </nav>
 
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
+                {% for category, message in messages %}
+                    <div class="rounded-md p-4 mb-4 {% if category == 'error' %}bg-red-50 text-red-700{% elif category == 'success' %}bg-green-50 text-green-700{% else %}bg-blue-50 text-blue-700{% endif %}">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                {% if category == 'error' %}
+                                    <i class="fas fa-exclamation-circle"></i>
+                                {% elif category == 'success' %}
+                                    <i class="fas fa-check-circle"></i>
+                                {% else %}
+                                    <i class="fas fa-info-circle"></i>
+                                {% endif %}
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-sm font-medium">{{ message }}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
     <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <h1 class="text-3xl font-bold text-gray-900 mb-8 text-center">AI Assignment Helper</h1>
 
+        {% if session.get('logged_in') %}
         <form id="assignment-form" class="bg-white rounded-2xl shadow-lg p-8 max-w-4xl mx-auto space-y-6" enctype="multipart/form-data">
             <div class="flex flex-col md:flex-row gap-6">
                 <div class="flex-1">
@@ -54,8 +115,8 @@
                 </div>
             </div>
             <div class="flex space-x-4">
-                <button type="submit" class="px-6 py-3 bg-primary-600 text-white rounded-md hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">Submit</button>
-                <button type="button" id="clear-assignment" class="px-6 py-3 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400">Clear</button>
+                <button type="submit" class="px-6 py-3 bg-primary-600 text-white rounded-md hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-all duration-200 transform hover:-translate-y-0.5">Submit</button>
+                <button type="button" id="clear-assignment" class="px-6 py-3 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 transition-all duration-200 transform hover:-translate-y-0.5">Clear</button>
             </div>
         </form>
 
@@ -69,6 +130,19 @@
             <h2 class="text-2xl font-semibold text-primary-600">Image Optimization Details</h2>
             <p id="optimization-details" class="text-gray-700"></p>
         </div>
+        {% else %}
+        <div class="bg-white rounded-2xl shadow-lg p-8 max-w-4xl mx-auto text-center">
+            <div class="text-6xl text-primary-500 mb-8">
+                <i class="fas fa-lock"></i>
+            </div>
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">Please Log In</h2>
+            <p class="text-gray-600 mb-8">You need to be logged in to use the AI Assignment Helper.</p>
+            <a href="{{ url_for('login') }}" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-all duration-200 transform hover:-translate-y-0.5">
+                <i class="fas fa-sign-in-alt mr-2"></i>
+                Log In Now
+            </a>
+        </div>
+        {% endif %}
     </main>
 
     <script>
@@ -80,37 +154,41 @@
         const explanationEl = document.getElementById('assignment-explanation');
         const optimizationEl = document.getElementById('optimization-details');
 
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const formData = new FormData(form);
-            resultSection.classList.add('hidden');
+        if (form) {
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const formData = new FormData(form);
+                resultSection.classList.add('hidden');
 
-            try {
-                const response = await fetch('/submit-assignment', {
-                    method: 'POST',
-                    body: formData
-                });
-                const data = await response.json();
+                try {
+                    const response = await fetch('/submit-assignment', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    const data = await response.json();
 
-                if (data.error) {
-                    alert(data.error);
-                    return;
+                    if (data.error) {
+                        alert(data.error);
+                        return;
+                    }
+
+                    answerEl.textContent = data.answer || '';
+                    summaryEl.textContent = data.summary || '';
+                    explanationEl.textContent = data.explanation || '';
+                    optimizationEl.textContent = data.optimization_details || '';
+                    resultSection.classList.remove('hidden');
+                } catch (error) {
+                    alert('Failed to submit assignment. Please try again.');
                 }
+            });
+        }
 
-                answerEl.textContent = data.answer || '';
-                summaryEl.textContent = data.summary || '';
-                explanationEl.textContent = data.explanation || '';
-                optimizationEl.textContent = data.optimization_details || '';
-                resultSection.classList.remove('hidden');
-            } catch (error) {
-                alert('Failed to submit assignment. Please try again.');
-            }
-        });
-
-        clearBtn.addEventListener('click', () => {
-            form.reset();
-            resultSection.classList.add('hidden');
-        });
+        if (clearBtn) {
+            clearBtn.addEventListener('click', () => {
+                form.reset();
+                resultSection.classList.add('hidden');
+            });
+        }
     </script>
 </body>
 </html>
